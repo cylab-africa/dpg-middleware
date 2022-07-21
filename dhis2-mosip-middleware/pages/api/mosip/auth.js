@@ -23,8 +23,6 @@ export default async function authenticate(req, res)
         const auth_partner_id = req.body.auth_partner_id;
         const api_key = req.body.api_key;
 
-        console.log(validationRes, "wgiye he");
-
         let mosip_request_body ={
           "id": "auth-id",
           "version": "auth-version",
@@ -86,21 +84,25 @@ export default async function authenticate(req, res)
               "auth-allowed-ky"
           ]
         };
+        // partnerId: jnishimi
+        // mispPartner: cmumisp
+        // apiKey: 940594
+        // mispLicenseKey: vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4
+        // let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
 
-        
-        let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
+        let mosip_route = `${MOSIP_BASE_ROUTE}auth/vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4/cmumisp/940594`;
         // I need to hit mosip here.
         
         // I CAN CONTACT THE OTHER SERVER: EX: MOSIP SERVER API
-        // const res_ext = await axios.post(API_ROUTE+"authenticate");
-        // console.log(res_ext.data);
+        const mosip_resp = await axios.post(mosip_route, mosip_request_body);
+        console.log(mosip_resp.data);
 
-        console.log("I am")
         res.status(200).json({ 
           message: 'This is hit when we want to authenticate someone',
           method: "POST",
           params: "We want from the body: 1. MISP-LK, 2. Auth-Partner-ID, and 3. API-Key",
-          request_body: mosip_request_body
+          request_body: mosip_request_body,
+          mosip_response: mosip_resp.data
         })
       }
     }
