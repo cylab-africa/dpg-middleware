@@ -7,12 +7,12 @@ export const validateAuth = (body) =>
         success = false;
         message= "misp_lk is needed to authenticate";
     }
-    else if(!data.auth_partner_id )
+    else if(!body.auth_partner_id )
     {
         success = false;
         message= "auth_partner_id is needed to authenticate";
     }
-    else if(!data.api-key )
+    else if(!body.api_key )
     {
         success = false;
         message= "api_key is needed to authenticate";
