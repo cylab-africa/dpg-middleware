@@ -2,20 +2,43 @@ export const validateAuth = (body) =>
 {
     let success = true;
     let message = "Validation is ok";
-    if(!body.misp_lk)
+    if(!body.keys)
     {
         success = false;
-        message= "misp_lk is needed to authenticate";
+        message= "keys are needed to authenticate in an encryption format";
     }
-    else if(!body.auth_partner_id )
+    return {success, message}
+}; 
+
+
+export const validateEncryptKeys = (keys) =>
+{
+    let success = true;
+    let message = "Validation is ok";
+    if(!keys.misp_lk)
     {
         success = false;
-        message= "auth_partner_id is needed to authenticate";
+        message= "misp_lk is required";
     }
-    else if(!body.api_key )
+    else if(!keys.auth_partner_id )
     {
         success = false;
-        message= "api_key is needed to authenticate";
+        message= "auth_partner_id is required";
+    }
+    else if(!keys.api_key )
+    {
+        success = false;
+        message= "api_key is required";
+    }
+    else if(!keys.transaction_id)
+    {
+        success = false;
+        message= "transaction_id is required";
+    }
+    else if(!keys.callback_url )
+    {
+        success = false;
+        message= "api_key is required";
     }
     return {success, message}
 }; 

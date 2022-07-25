@@ -1,5 +1,6 @@
 import axios from "axios";
-import { API_ROUTE, MOSIP_BASE_ROUTE } from "../../utils/mosip.env";
+import { cipheringText, decipheringText } from "../../utils/aes.encrypt";
+import { MOSIP_BASE_ROUTE } from "../../utils/mosip.env";
 import { validateAuth } from "../../utils/validations";
 
 export default async function authenticate(req, res) 
@@ -19,9 +20,9 @@ export default async function authenticate(req, res)
       }
       else
       {
-        const misp_lk = req.body.misp_lk;
-        const auth_partner_id = req.body.auth_partner_id;
-        const api_key = req.body.api_key;
+        const misp_lk = ""
+        const auth_partner_id = "";
+        const api_key = "";
 
         let mosip_request_body ={
           "id": "auth-id",
