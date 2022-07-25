@@ -1,5 +1,4 @@
 import axios from "axios";
-import { cipheringText, decipheringText } from "../../utils/aes.encrypt";
 import { MOSIP_BASE_ROUTE } from "../../utils/mosip.env";
 import { validateAuth } from "../../utils/validations";
 
