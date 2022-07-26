@@ -21,14 +21,10 @@ export default async function authenticate(req, res)
       }
       else
       {
-        console.log(req.body.keys);
-        const keys_decrypt = decipheringText(req.body.keys);
-        const keys_info = extract(keys_decrypt);
-        const misp_lk = keys_info.misp_lk;
-        const auth_partner_id = keys_info.auth_partner_id;
-        const api_key = keys_info.api_key;
-        const transaction_id =keys_info.transaction_id;
-        const callback_url = keys_info.callback_url;
+        const token = req.params.token;
+        const keys_decrypt = decipheringText(token);
+        const keys_info = JSON.parse(keys_decrypt);
+        const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 
         let mosip_request_body ={
           "id": "auth-id",
