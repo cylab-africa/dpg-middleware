@@ -1,4 +1,6 @@
 import axios from "axios";
+import { decipheringText } from "../../utils/aes.encrypt";
+import { extract } from "../../utils/extract.keys";
 import { MOSIP_BASE_ROUTE } from "../../utils/mosip.env";
 import { validateAuth } from "../../utils/validations";
 
@@ -19,16 +21,21 @@ export default async function authenticate(req, res)
       }
       else
       {
-        const misp_lk = ""
-        const auth_partner_id = "";
-        const api_key = "";
+        console.log(req.body.keys);
+        const keys_decrypt = decipheringText(req.body.keys);
+        const keys_info = extract(keys_decrypt);
+        const misp_lk = keys_info.misp_lk;
+        const auth_partner_id = keys_info.auth_partner_id;
+        const api_key = keys_info.api_key;
+        const transaction_id =keys_info.transaction_id;
+        const callback_url = keys_info.callback_url;
 
         let mosip_request_body ={
           "id": "auth-id",
           "version": "auth-version",
-          "individualId": "auth-indv-id",
-          "individualIdType": "auth-indv-id-type",
-          "transactionID": "auth-transaction",
+          "individualId": req.body.individualId,
+          "individualIdType": req.body.individualIdType,
+          "transactionID": req.body.transactionId,
           "requestTime": "auth-requ-time",
           "specVersion": "auth-spec-version",
           "thumbprint": "auth-thumbprint",
