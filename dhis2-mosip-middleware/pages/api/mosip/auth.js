@@ -37,10 +37,10 @@ export default async function authenticate(req, res)
           "individualIdType": req.body.individualIdType,
           "transactionID": req.body.transactionId,
           "requestTime": "auth-requ-time",
-          "specVersion": "auth-spec-version",
-          "thumbprint": "auth-thumbprint",
-          "domainUri": "auth-domainUri",
-          "env": "auth-env",
+          "specVersion": req.body.specVersion,
+          "thumbprint": req.body.thumbprint,
+          "domainUri": req.body.domainUri,
+          "env": req.body.env,
           "request": {
               "otp": "otp-123424",
               "staticPin": "static-pin-7890",
@@ -49,43 +49,43 @@ export default async function authenticate(req, res)
                   {
                       "data": {
                           "digitalId": {
-                              "serialNo": "1",
-                              "make": "make",
-                              "model": "Model",
-                              "type": "type",
-                              "deviceSubType": "subtype",
-                              "deviceProvider": "DProvider",
-                              "deviceProviderId": "providerID",
+                              "serialNo": req.body.serialNo,
+                              "make": req.body.make,
+                              "model": req.body.model,
+                              "type": req.body.type,
+                              "deviceSubType": req.body.deviceSubType,
+                              "deviceProvider": req.body.deviceProvider,
+                              "deviceProviderId": req.body.deviceProviderId,
                               "dp": "db",
                               "dpId": "dpId",
-                              "dateTime": "datetime"
+                              "dateTime": req.body.dateTime
                           },
                           "bioType": "data-bio-type",
                           "bioSubType": "data-bio-type-id",
                           "bioValue": "data-bio-value",
                           "deviceCode": "data-devoce-code",
                           "deviceServiceVersion": "data-device-serv-ver",
-                          "transactionId": "data-trsct-id",
-                          "timestamp": "data-time",
-                          "purpose": "data-purpose",
-                          "env": "data-env",
-                          "version": "data-version",
-                          "domainUri": "daa-domain_uri",
-                          "requestedScore": 0,
-                          "qualityScore": 0
+                          "transactionId": req.body.transactionId,
+                          "timestamp": req.body.timestamp,
+                          "purpose": req.body.purpose,
+                          "env": req.body.env,
+                          "version": req.body.version,
+                          "domainUri": req.body.domainUri,
+                          "requestedScore": req.body.requestedScore,
+                          "qualityScore": req.body.qualityScore
                       },
-                      "hash": "hash",
+                      "hash": req.body.hash,
                       "sessionKey": "session key",
-                      "specVersion": "Spec Version",
-                      "thumbprint": "Thumb information"
+                      "specVersion": req.body.specVersion,
+                      "thumbprint": req.body.thumbprint
                   }
               ]
           },
           "consentObtained": true,
-          "requestHMAC": "auth-hmac",
+          "requestHMAC": req.body.requestHMAC,
           "requestSessionKey": "auth-session-key",
           "metadata": {
-              "one": "One"
+              "andrewId": req.body.andrewId
           },
           "allowedKycAttributes": [
               "auth-allowed-ky"
@@ -97,7 +97,8 @@ export default async function authenticate(req, res)
         // mispLicenseKey: vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4
         // let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
 
-        let mosip_route = `${MOSIP_BASE_ROUTE}auth/vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4/cmumisp/940594`;
+        let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
+        console.log(mosip_route);
         // I need to hit mosip here.
         
         // I CAN CONTACT THE OTHER SERVER: EX: MOSIP SERVER API
