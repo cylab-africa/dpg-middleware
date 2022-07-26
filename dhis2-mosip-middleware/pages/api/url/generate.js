@@ -18,7 +18,8 @@ export default async function authenticate(req, res)
       }
       else
       {
-        const keys = `${req.body.misp_lk}|${req.body.auth_partner_id}|${req.body.api_key}|${req.body.transaction_id}|${req.body.callback_url}`;
+        const timestamp = Date.now();
+        const keys = `${req.body.misp_lk}|${req.body.auth_partner_id}|${req.body.api_key}|${req.body.transaction_id}|${req.body.callback_url}|${timestamp}`;
         const encrypted  = cipheringText(keys);
 
         const url = `${process.env.API_ROUTE}${encrypted}`
