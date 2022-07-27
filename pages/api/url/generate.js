@@ -6,7 +6,7 @@ export default async function authenticate(req, res)
 {
   try
   {
-    if (req.method === 'POST') 
+    if (req.method === 'POST')
     {
       const validationRes = validateEncryptKeys(req.body);
       if(!validationRes.success)
