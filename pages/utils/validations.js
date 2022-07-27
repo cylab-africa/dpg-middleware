@@ -2,10 +2,10 @@ export const validateAuth = (body) =>
 {
     let success = true;
     let message = "Validation is ok";
-    if(!body.keys)
+    if(!body.token)
     {
         success = false;
-        message= "keys are needed to authenticate in an encryption format";
+        message= "token is needed to authenticate in an encryption format";
     }
     return {success, message}
 }; 

@@ -10,7 +10,7 @@ export default async function authenticate(req, res)
   {
     if (req.method === 'POST') 
     {
-      let validationRes = validateAuth(req.body);
+      let validationRes = validateAuth(req.query);
 
       if(validationRes.success === false)
       {
@@ -21,9 +21,10 @@ export default async function authenticate(req, res)
       }
       else
       {
-        const token = req.params.token;
+        const token = req.query.token;
         const keys_decrypt = decipheringText(token);
         const keys_info = JSON.parse(keys_decrypt);
+
         const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 
         let mosip_request_body ={
@@ -94,12 +95,14 @@ export default async function authenticate(req, res)
         // let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
 
         let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
-        console.log(mosip_route);
+
         // I need to hit mosip here.
         
         // I CAN CONTACT THE OTHER SERVER: EX: MOSIP SERVER API
+        console.log(mosip_route)
         const mosip_resp = await axios.post(mosip_route, mosip_request_body);
-        console.log(mosip_resp.data);
+        console.log("Serious")
+        console.log(mosip_resp);
 
         res.status(200).json({ 
           message: 'This is hit when we want to authenticate someone',
