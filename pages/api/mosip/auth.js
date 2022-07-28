@@ -2,6 +2,7 @@ import axios from "axios";
 import { decipheringText } from "../../../utils/aes.encrypt";
 import { extract } from "../../../utils/extract.keys";
 import { MOSIP_BASE_ROUTE } from "../../../utils/mosip.env";
+import { mosip_request_body } from "../../../utils/mosip.request.body";
 import { validateAuth } from "../../../utils/validations";
 
 export default async function authenticate(req, res) 
@@ -27,7 +28,7 @@ export default async function authenticate(req, res)
 
         const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 
-        let mosip_request_body ={
+   /*      let mosip_request_body ={
           "id": "auth-id",
           "version": "auth-version",
           "individualId": req.body.individualId,
@@ -87,29 +88,29 @@ export default async function authenticate(req, res)
           "allowedKycAttributes": [
               "auth-allowed-ky"
           ]
-        };
+        }; */
         // partnerId: jnishimi
         // mispPartner: cmumisp
         // apiKey: 940594
         // mispLicenseKey: vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4
         // let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
 
+
         let mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
 
         // I need to hit mosip here.
         
         // I CAN CONTACT THE OTHER SERVER: EX: MOSIP SERVER API
-        console.log(mosip_route)
+        console.log({mosip_route})
         const mosip_resp = await axios.post(mosip_route, mosip_request_body);
         console.log("Serious")
-        console.log(mosip_resp);
+        console.log({mosip_resp});
 
-        res.status(200).json({ 
+        return res.status(200).json({ 
           message: 'This is hit when we want to authenticate someone',
           method: "POST",
           params: "We want from the body: 1. MISP-LK, 2. Auth-Partner-ID, and 3. API-Key",
-          request_body: mosip_request_body,
-          mosip_response: mosip_resp.data
+          mosip_response: mosip_resp
         })
       }
     }
