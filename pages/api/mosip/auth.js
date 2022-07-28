@@ -25,6 +25,7 @@ export default async function authenticate(req, res)
         const token = req.query.token;
         const keys_decrypt = decipheringText(token);
         const keys_info = JSON.parse(keys_decrypt);
+        console.log(keys_info);
 
         const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 
@@ -102,14 +103,24 @@ export default async function authenticate(req, res)
         
         // I CAN CONTACT THE OTHER SERVER: EX: MOSIP SERVER API
         console.log({mosip_route})
-        const mosip_resp = await axios.post(mosip_route, mosip_request_body);
-        console.log("Serious")
-        console.log({mosip_resp});
+        // const mosip_resp = await axios.post(mosip_route, mosip_request_body);
+        const mosip_resp = {
+          "id": "mosip.identity.auth",
+          "version": "v1",
+          "responseTime": "2019-02-15T07:23:19.590+05:30",
+          "transactionID": "<transaction_id used in request>",
+          "response": {
+            "authStatus": true,
+            "authToken": "<authentication_token>"
+          },
+          "errors": null
+        }
 
         return res.status(200).json({ 
           message: 'This is hit when we want to authenticate someone',
           method: "POST",
           params: "We want from the body: 1. MISP-LK, 2. Auth-Partner-ID, and 3. API-Key",
+          callback_url: callback_url,
           mosip_response: mosip_resp
         })
       }
