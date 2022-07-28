@@ -1,8 +1,8 @@
 import axios from "axios";
-import { decipheringText } from "../../utils/aes.encrypt";
-import { extract } from "../../utils/extract.keys";
-import { MOSIP_BASE_ROUTE } from "../../utils/mosip.env";
-import { validateAuth } from "../../utils/validations";
+import { decipheringText } from "../../../utils/aes.encrypt";
+import { extract } from "../../../utils/extract.keys";
+import { MOSIP_BASE_ROUTE } from "../../../utils/mosip.env";
+import { validateAuth } from "../../../utils/validations";
 
 export default async function authenticate(req, res) 
 {

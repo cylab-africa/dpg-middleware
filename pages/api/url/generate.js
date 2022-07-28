@@ -1,6 +1,6 @@
-import { cipheringText, decipheringText } from "../../utils/aes.encrypt";
-import { API_ROUTE } from "../../utils/mosip.env";
-import { validateEncryptKeys } from "../../utils/validations";
+import { cipheringText, decipheringText } from "../../../utils/aes.encrypt";
+import { API_ROUTE } from "../../../utils/mosip.env";
+import { validateEncryptKeys } from "../../../utils/validations";
 
 export default async function authenticate(req, res) 
 {
