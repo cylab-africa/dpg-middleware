@@ -115,7 +115,9 @@ export default async function authenticate(req, res)
           },
           "errors": null
         }
-
+        const to_dhis2 = await axios.post(callback_url, mosip_resp);
+        console.log(to_dhis2);
+        
         return res.status(200).json({ 
           message: 'This is hit when we want to authenticate someone',
           method: "POST",
