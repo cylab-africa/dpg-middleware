@@ -19,11 +19,11 @@ export default async function authenticate(req, res)
       else
       {
         const content = {
-          misp_lk: "jnishimi",
-          auth_partner_id: "cmumisp",
-          api_key: "940594",
-          transaction_id: "transaction-id",
-          callback_url: "localhost:3010/users/auth-",
+          misp_lk: req.body.misp_lk,
+          auth_partner_id: req.body.auth_partner_id,
+          api_key: req.body.api_key,
+          transaction_id: req.body.transaction_id,
+          callback_url: req.body.callback_url,
           timestamp: Date.now(),
         }
         const encrypted = cipheringText(JSON.stringify(content));

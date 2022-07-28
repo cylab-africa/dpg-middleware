@@ -23,9 +23,9 @@ export default async function authenticate(req, res)
       else
       {
         const token = req.query.token;
+        console.log(token);
         const keys_decrypt = decipheringText(token);
         const keys_info = JSON.parse(keys_decrypt);
-        console.log(keys_info);
 
         const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 
@@ -115,8 +115,8 @@ export default async function authenticate(req, res)
           },
           "errors": null
         }
-        const to_dhis2 = await axios.post(callback_url, mosip_resp);
-        console.log(to_dhis2);
+        
+        await axios.post(callback_url, mosip_resp);
         
         return res.status(200).json({ 
           message: 'This is hit when we want to authenticate someone',
