@@ -97,4 +97,7 @@ stringData:
   ALGORITHM: "algorithm"
   KEY: "key"
   IV: "iv"
+  NEXT_PUBLIC_MDS_BYPASS: "bypass"
+  MOSIP_BYPASS: "bypass"
+
 type: Opaque
