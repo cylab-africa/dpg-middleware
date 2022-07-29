@@ -4,15 +4,17 @@ import styles from "./VerifyForm.module.scss";
 import { useEffect, useState } from "react";
 import NotificationManager from '../../lib/NotificationManager.js';
 import { defaultConfig } from '../../config/default';
-import {CircularProgress } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 import { CheckCircle as CheckCircleIcon, Circle as CancelIcon } from '@mui/icons-material';
 
-export default function AuthWithMOSIP({ user, bioData, cb=() => {} }) {
+export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) {
 	const [status, setStatus] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	user = {
+		VID: "test-user",
+	}
 	const device = defaultConfig.device;
 	useEffect(() => {
-		console.log(bioData);
 		const device_options = bioData.options;
 		const options = {
 			"env": "Staging",
@@ -25,13 +27,13 @@ export default function AuthWithMOSIP({ user, bioData, cb=() => {} }) {
 			"individualId": user.VID,
 			"VID": user.VID,
 			"individualType": "VID",
-			"thumbprint": bioData.biometrics[0].data,
-			"hash": bioData.biometrics[0].hash,
+			"thumbprint": bioData.biometrics.data,
+			"hash": bioData.biometrics.hash,
 			"requestedScore": "10",
 			...device,
 			...device_options,
 		}
-		fetch(defaultConfig.mainApi + "/auth",
+		fetch(`/api/mosip/auth?token=${token}`,
 			{
 				method: "POST",
 				body: JSON.stringify(options),
@@ -41,7 +43,9 @@ export default function AuthWithMOSIP({ user, bioData, cb=() => {} }) {
 			})
 			.then(res => res.json())
 			.then(res => {
-				setStatus(res.status ?? res.success ?? res.data.success ?? res.data.status);
+				if(res.status){
+					setStatus(res.mosip_response.response.authStatus)
+				}
 			})
 			.catch(err => {
 				console.log(err);
@@ -64,7 +68,7 @@ export default function AuthWithMOSIP({ user, bioData, cb=() => {} }) {
 				}
 				{isLoading && status &&
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-						<CheckCircleIcon sx={{ color: "#007c04", m: 3, width: 200, height: 200 }}/>
+						<CheckCircleIcon sx={{ color: "#007c04", m: 3, width: 200, height: 200 }} />
 					</Box>
 				}
 				{isLoading && !status &&

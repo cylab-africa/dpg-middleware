@@ -22,6 +22,7 @@ export default async function authenticate(req, res)
           misp_lk: req.body.misp_lk,
           auth_partner_id: req.body.auth_partner_id,
           api_key: req.body.api_key,
+          mosip_id: req.body.mosip_id, // VID or UID of the person you want to authenticate
           transaction_id: req.body.transaction_id,
           callback_url: req.body.callback_url,
           timestamp: Date.now(),

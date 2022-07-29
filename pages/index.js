@@ -3,13 +3,25 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { ToastContainer } from 'react-toastify';
 import VerificationController from '../components/VerificationController/VerificationController';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  const user = {
-    name: "Test User",
-    VID: "xxx-test"
-  }
+  const router = useRouter();
+  const MDS_BYPASS = process.env.NEXT_PUBLIC_MDS_BYPASS;
+  const [token, setToken] = useState();
+  const [validPage, setValidPage] = useState(false);
+  useEffect(() => {
+    const query = router.query;
+    if (!query.token) {
+      setValidPage(false)
+    } else {
+      setValidPage(true)
+      setToken(query.token);
+    }
+
+  }, [token, router]);
   return (
     <div className={styles.container}>
       <Head>
@@ -30,7 +42,19 @@ export default function Home() {
         pauseOnHover
       />
       <Box component={"main"} className={styles.main}>
-        <VerificationController user={user}/>
+        {validPage &&
+          <VerificationController token={token} MDS_BYPASS={MDS_BYPASS} />
+        }
+        {!validPage &&
+          <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+            <Typography variant='h4'>
+              This page is invalid. You need a token to access this page.
+            </Typography>
+            <Typography sx={{ mt: 3 }} variant='title'>
+              Please Contact Admin
+            </Typography>
+          </Box>
+        }
       </Box>
     </div>
   )
