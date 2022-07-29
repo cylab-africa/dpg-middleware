@@ -45,7 +45,7 @@ spec:
     spec:
       serviceAccountName: dhis-mosip-middleware-account  
       containers:  
-      - image: 160168652050.dkr.ecr.us-west-1.amazonaws.com/dhis-mosip-middleware:latest ## It is not there yet
+      - image: 160168652050.dkr.ecr.us-west-1.amazonaws.com/dhis2-mosip-middleware:latest
         name: dhis-mosip-middleware-container  
         ports:
         - containerPort: 3000 
@@ -78,7 +78,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: dhis-mosip-middleware
+            name: dhis-mosip-middleware-secret-prod
             port:
               number: 3000
 ---
