@@ -91,4 +91,10 @@ metadata:
     app: dhis-mosip-middleware 
 stringData:
   PORT: "3000"
+  MOSIP_BASE_ROUTE: "mosip_base_route"
+  HOST_NAME: "host_name"
+  API_ROUTE: "api_route_to_open"
+  ALGORITHM: "algorithm"
+  KEY: "key"
+  IV: "iv"
 type: Opaque
