@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 export default function Home() {
   const router = useRouter();
-  const MDS_BYPASS = process.env.NEXT_PUBLIC_MDS_BYPASS;
+  const MDS_BYPASS = process.env.NEXT_PUBLIC_MDS_BYPASS ?? true;
   const [token, setToken] = useState();
   const [validPage, setValidPage] = useState(false);
   useEffect(() => {
