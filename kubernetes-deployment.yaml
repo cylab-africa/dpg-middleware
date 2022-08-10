@@ -82,7 +82,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: dhis-mosip-middleware-secret-prod
+            name: dhis-mosip-middleware-service-prod
             port:
               number: 3000
 ---
