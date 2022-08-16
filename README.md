@@ -31,6 +31,7 @@ docker run -p 3005:3000 dhis2-mosip-middleware:lastest
 ```
 [More Docker Help](https://docs.docker.com/build/)
 
-## Wireframes
-Before coding the pages, we first created the wireframes of our pages using [figma](https://www.figma.com/best-practices/guide-to-developer-handoff/components-styles-and-documentation/)
-- You can find [wireframes here](https://www.figma.com/proto/B6A9J7UMatyxLzAWvwTnuU/MOSIP-Use-case-at-CMU?node-id=2%3A9&starting-point-node-id=2%3A9) 
+## Middleware Front-end
+Middleware provides a single frontend page that opens up when an external system (DHIS2) opens the generated link to open the middleware. This page has 3 steps that shows the process to authenticate a person wich are **Initiation, verification, and the results**. The below image shows that single middleware page.
+
+![Middleware page](https://github.com/cylab-africa/dhis2-mosip-middleware/blob/main/public/middle-ware.PNG)
