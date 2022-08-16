@@ -44,7 +44,7 @@ You can check the [API documentation]()
 
 
 ## Recap
-This is a application that acts as a DHIS2-MOSIP Middleware. It has frontend and backend tiers where frontend is has its own page tthat shows the process of authentication, while backend is used by frontend and external system(DHIS2). 
+This is a application that acts as a DHIS2-MOSIP Middleware. It has frontend and backend tiers where frontend is has its own page that shows the process of authentication, while backend is used by frontend and external system(DHIS2). 
 ## Stay in touch
 
 - Author - [Jean Paul Nishimirwe](##)
