@@ -1,4 +1,4 @@
-# CMU Event Authenticator Frontend
+# DHIS2-MOSIP Middleware
 This project is the application that plays as the middleware between DHIS2  and MOSIP DPGs application to allow their interoperability. This application has frontend tier and backend tier and are all built in JS using [NextJs framework](https://nextjs.org/learn/basics/create-nextjs-app).
 
 The backend of the application provides av endpoint to be consumed by DHIS2 system while generating URL to open the middleware. You will see the endpoint in API Documentation
@@ -15,7 +15,7 @@ yarn dev
 
 ## How to run the application
 - Open [http://localhost:3005](http://localhost:3005) with your browser to run the middleware application locally.
-- Open [https://middleware.mosipcmuafrica.me](https://middleware.mosipcmuafrica.me/) 
+- Open [https://middleware.mosipcmuafrica.me](https://middleware.mosipcmuafrica.me?token=xxxxxxxxxx) 
 with your browser to run the deployed version online
 
 ## Deployment
@@ -25,6 +25,7 @@ The application is hosted on AWS, and Elastic Kubernetes service(EKS) is used to
 
 [More EKS Help](https://aws.amazon.com/eks/)
 
+**Building and running the image**
 ```bash
 docker build -t dhis2-mosip-middleware:lastest .
 docker run -p 3005:3000 dhis2-mosip-middleware:lastest 
