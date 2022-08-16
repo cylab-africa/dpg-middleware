@@ -40,7 +40,8 @@ Middleware provides a single frontend page that opens up when an external system
 ## Backend API documentation
 As explained, this application provides endpoint consumed by its frontend and some consumed by external system(DHIS2). All endpoint are available in documentation.
 
-You can check the [API documentation]()
+You can check the [API documentation](https://github.com/cylab-africa/dhis2-mosip-middleware/blob/main/api_documentation/Cylab-Africa-middleware-api-documentation-1.0.0-resolved.json).
+
 In the above documentation, please refer to [this documentation](https://mosipcmuafrica.me/idauthentication/v1/swagger-ui/index.html?configUrl=/idauthentication/v1/v3/api-docs/swagger-config#/auth-controller/authenticateIndividual) for every occurence of MOSIP auth controller body 
 
 
