@@ -36,3 +36,18 @@ docker run -p 3005:3000 dhis2-mosip-middleware:latest
 Middleware provides a single frontend page that opens up when an external system (DHIS2) opens the generated link to open the middleware. This page has 3 steps that shows the process to authenticate a person wich are **Initiation, verification, and the results**. The below image shows that single middleware page.
 
 ![Middleware page](https://github.com/cylab-africa/dhis2-mosip-middleware/blob/main/public/middle-ware.PNG)
+
+## Backend API documentation
+As explained, this application provides endpoint consumed by its frontend and some consumed by external system(DHIS2). All endpoint are available in documentation.
+
+You can check the [API documentation]()
+
+
+## Recap
+This is a application that acts as a DHIS2-MOSIP Middleware. It has frontend and backend tiers where frontend is has its own page tthat shows the process of authentication, while backend is used by frontend and external system(DHIS2). 
+## Stay in touch
+
+- Author - [Jean Paul Nishimirwe](##)
+- Author - [Nafiu Lawal](##)
+- Supervisor - [Andrew Musoke](##)
+- Company - [Cylab-Africa](##)
