@@ -41,10 +41,11 @@ Middleware provides a single frontend page that opens up when an external system
 As explained, this application provides endpoint consumed by its frontend and some consumed by external system(DHIS2). All endpoint are available in documentation.
 
 You can check the [API documentation]()
+In the above documentation, please refer to [this documentation](https://mosipcmuafrica.me/idauthentication/v1/swagger-ui/index.html?configUrl=/idauthentication/v1/v3/api-docs/swagger-config#/auth-controller/authenticateIndividual) for every occurence of MOSIP auth controller body 
 
 
 ## Recap
-This is a application that acts as a DHIS2-MOSIP Middleware. It has frontend and backend tiers where frontend is has its own page that shows the process of authentication, while backend is used by frontend and external system(DHIS2). 
+This is a application that acts as a DHIS2-MOSIP Middleware. It has frontend and backend tiers where frontend is has its own page that shows the process of authentication, while backend is used by frontend and external system(DHIS2)..
 ## Stay in touch
 
 - Author - [Jean Paul Nishimirwe](##)
