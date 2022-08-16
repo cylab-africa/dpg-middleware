@@ -42,7 +42,7 @@ As explained, this application provides endpoint consumed by its frontend and so
 
 You can check the [API documentation](https://github.com/cylab-africa/dhis2-mosip-middleware/blob/main/api_documentation/Cylab-Africa-middleware-api-documentation-1.0.0-resolved.json).
 
-In the above documentation, please refer to [this documentation](https://mosipcmuafrica.me/idauthentication/v1/swagger-ui/index.html?configUrl=/idauthentication/v1/v3/api-docs/swagger-config#/auth-controller/authenticateIndividual) for every occurence of MOSIP auth controller body 
+In the above API documentation, please refer to [this documentation](https://mosipcmuafrica.me/idauthentication/v1/swagger-ui/index.html?configUrl=/idauthentication/v1/v3/api-docs/swagger-config#/auth-controller/authenticateIndividual) for every occurence of MOSIP auth controller body 
 
 
 ## Recap
