@@ -27,8 +27,8 @@ The application is hosted on AWS, and Elastic Kubernetes service(EKS) is used to
 
 **Building and running the image**
 ```bash
-docker build -t dhis2-mosip-middleware:lastest .
-docker run -p 3005:3000 dhis2-mosip-middleware:lastest 
+docker build -t dhis2-mosip-middleware:latest
+docker run -p 3005:3000 dhis2-mosip-middleware:latest 
 ```
 [More Docker Help](https://docs.docker.com/build/)
 
