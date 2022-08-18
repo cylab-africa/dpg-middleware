@@ -115,7 +115,6 @@ export default async function authenticate(req, res) {
 				mosip_resp = await axios.post(mosip_route, mosip_request_body);
 			}
 
-			
 			await axios.post(callback_url, mosip_resp);
 
 			return res.status(200).json({
