@@ -11,12 +11,136 @@ export default function RequestBioData({ cb, MDS_BYPASS = false }) {
 	const [failed, setFailed] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
+	let port = 4501;
+	let isCaptureReqSent = false;
 	const start = true;
+	
 	const handleTryAgain = async () => {
 		setIsLoading(true);
-		setTimeout(async () => {
-			callMDS();
-		}, 2000);
+		capture_flow();
+	}
+	const capture_flow = async () => {
+		const disc = await discovery();
+		console.log(disc);
+		if (disc && disc.deviceStatus === "Ready") {
+			const info = await deviceInfo()
+			if (info[0].error.errorCode === "0") {
+				await stream_and_capture();
+			}
+			setTimeout(async () => {
+				console.log("log timeout ");
+			}, 15000)
+			3
+		}
+
+	}
+	const stream_and_capture = async () => {
+		const response = await fetch(`http://127.0.0.1:${port}/stream`, {
+			method: "STREAM",
+			headers: {
+				"accept": "multipart/*",
+			},
+			body: JSON.stringify({
+				"deviceId": "C8R1ET11432",
+				"deviceSubId": 1,
+				"timeout": "10000"
+			})
+		});
+		const reader = response.body.getReader();
+		while (true) {
+			const { value, done } = await reader.read();
+			if (done === true) break;
+			if (isCaptureReqSent == false) {
+				isCaptureReqSent = true;
+				console.log("Sending capture request");
+				const response = await capture();
+				cb(response);
+				setIsLoading(false);
+			}
+		}
+	}
+
+	const deviceInfo = async () => {
+		try {
+			const response = await fetch(`http://127.0.0.1:${port}/info`, {
+				method: 'MOSIPDINFO',
+				headers: {
+					"Content-Type": "application/json",
+					"accept": "application/json",
+				},
+				body: {},
+				redirect: 'manual'
+			});
+			const json = await response.json();
+			console.log({ deviceInfo: json });
+			return json;
+		} catch (err) {
+			return err;
+		}
+	}
+	const capture = async () => {
+		try {
+			const response = await fetch(`http://127.0.0.1:${port}/capture`, {
+				method: "RCAPTURE",
+				body: JSON.stringify({
+					"env": "Developer",
+					"purpose": "Registration",
+					"specVersion": "0.9.5",
+					"timeout": "20000",
+					"deviceCode": 'C8R1ET11432',
+					"captureTime": new Date().toISOString(),
+					"transactionId": "1125555",
+					"bio": [
+						{
+							"type": "Finger",
+							"count": "4",
+							// bioSubType is optional values must according to deviceSubId and count 
+							"bioSubType": [
+								"Left IndexFinger",
+								"Left MiddleFinger",
+								"Left RingFinger",
+								"Left LittleFinger"
+							],
+							"exception": [],
+							"requestedScore": "50",
+							"deviceId": "C8R1ET11432",
+							"deviceSubId": 1, // 1 for Left Slap, 2 for Right slap, 3 for thumbs 
+							"previousHash": ""
+						}
+					]
+				})
+			})
+
+			const json = response.json();
+
+			return json;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	const discovery = async () => {
+		try {
+			for (; port < 4600; port++) {
+				const response = await fetch(`http://127.0.0.1:${port}/device`, {
+					method: "MOSIPDISC",
+					headers: {
+						"Content-Type": "application/json",
+						"accept": "application/json",
+					},
+					body: JSON.stringify({
+						"type": "Finger"
+					})
+				});
+				const json = await response.json();
+				if (json.length > 0)
+					return json[0];
+			}
+			return false;
+
+		} catch (err) {
+			return err;
+		}
 	}
 	const callMDS = async () => {
 		const options = {
