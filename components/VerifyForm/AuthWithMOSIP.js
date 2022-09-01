@@ -46,10 +46,11 @@ export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) 
 				if(res.status){
 					setStatus(res.mosip_response.response.authStatus)
 				}
+				setIsLoading(false);
 			})
 			.catch(err => {
 				console.log(err);
-				setStatus(true);
+				setStatus(false);
 				setIsLoading(false);
 				const message = err.message;
 				NotificationManager.notify({ message, type: "error" });
@@ -61,17 +62,17 @@ export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) 
 	return (
 		<Box >
 			<Box className={styles.form} >
-				{!isLoading &&
+				{isLoading &&
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} >
 						<CircularProgress sx={{ m: 3, width: 200, height: 200 }} />
 					</Box>
 				}
-				{isLoading && status &&
+				{!isLoading && status &&
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<CheckCircleIcon sx={{ color: "#007c04", m: 3, width: 200, height: 200 }} />
 					</Box>
 				}
-				{isLoading && !status &&
+				{!isLoading && !status &&
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<CancelIcon sx={{ color: "#7C0000", m: 3, width: 200, height: 200 }} />
 					</Box>

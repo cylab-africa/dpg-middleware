@@ -1,4 +1,5 @@
 export const defaultConfig = {
+	MOCK: true,
 	mainApi : "/api/",
 	MDS_URL: "http://127.0.0.1:4501/capture",
 	device: {
