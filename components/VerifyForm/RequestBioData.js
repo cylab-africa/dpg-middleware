@@ -37,15 +37,23 @@ export default function RequestBioData({ cb, MDS_BYPASS = false }) {
 	const capture_flow = async () => {
 		const disc = await discovery();
 		console.log(disc);
-		if (disc && disc.deviceStatus === "Ready") {
-			const info = await deviceInfo()
-			if (info[0].error.errorCode === "0") {
-				await stream_and_capture();
+		if (disc) {
+			if (disc.deviceStatus === "Ready") {
+				const info = await deviceInfo()
+				if (info[0].error.errorCode === "0") {
+					await stream_and_capture();
+				}
+				setTimeout(async () => {
+					console.log("log timeout ");
+				}, 15000)
+				3
+			} else {
+				setIsLoading(false);
+				NotificationManager.notify({ message: "Biometric Device is not ready. Try again.", type: "warning" })
 			}
-			setTimeout(async () => {
-				console.log("log timeout ");
-			}, 15000)
-			3
+		} else {
+			setIsLoading(false);
+			NotificationManager.notify({ message: "Biometric Device not found. Connect device or check connection and try again", type: "warning" })
 		}
 
 	}
@@ -137,19 +145,23 @@ export default function RequestBioData({ cb, MDS_BYPASS = false }) {
 	const discovery = async () => {
 		try {
 			for (; port < 4600; port++) {
-				const response = await fetch(`http://127.0.0.1:${port}/device`, {
-					method: "MOSIPDISC",
-					headers: {
-						"Content-Type": "application/json",
-						"accept": "application/json",
-					},
-					body: JSON.stringify({
-						"type": "Finger"
-					})
-				});
-				const json = await response.json();
-				if (json.length > 0)
-					return json[0];
+				try {
+					const response = await fetch(`http://127.0.0.1:${port}/device`, {
+						method: "MOSIPDISC",
+						headers: {
+							"Content-Type": "application/json",
+							"accept": "application/json",
+						},
+						body: JSON.stringify({
+							"type": "Finger"
+						})
+					});
+					const json = await response.json();
+					if (json.length > 0)
+						return json[0];
+				} catch (err) {
+					continue;
+				}
 			}
 			return false;
 
