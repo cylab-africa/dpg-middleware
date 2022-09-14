@@ -4,17 +4,26 @@ import RequestBioData from '../VerifyForm/RequestBioData';
 import AuthWithMOSIP from '../VerifyForm/AuthWithMOSIP';
 
 
-export default function VerificationController({ token, MDS_BYPASS }) {
+export default function VerificationController({ token }) {
 	const [activeStep, setActiveStep] = useState(0);
 	const [mdsResponse, setMDSResponse] = useState({});
 	const steps = ['Initiation', 'Verify', 'Results'];
+	const [mockVerification, setMockVerification] = useState(false);
 
 	const handleNext = () => {
 		setActiveStep(activeStep + 1);
 	};
+	const handlePrevious = () => {
+		setActiveStep(activeStep - 1)
+	}
 
 	const handleMockMDS = (response) => {
 		setMDSResponse(response);
+		handleNext();
+	}
+
+	const handleNextMock = () => {
+		setMockVerification(true);
 		handleNext();
 	}
 	
@@ -38,14 +47,19 @@ export default function VerificationController({ token, MDS_BYPASS }) {
 							<Box sx={{ display: 'flex', flexDirection: 'column', p: 5, }}>
 								<Typography variant='h6'>Authentication with MOSIP</Typography>
 							</Box>
-							<Button onClick={handleNext}>Verify</Button>
+							<Box sx={{ display: 'flex', flexDirection: 'column', pt: 3 }}>
+								<Button variant='contained' onClick={handleNext}>Verify</Button>
+							</Box>
+							<Box sx={{ display: 'flex', flexDirection: 'column', pt: 3 }}>
+								<Button variant="contained" onClick={handleNextMock}>Mock Verify</Button>
+							</Box>
 						</Box>
 					</Fragment>
 				}
 				{activeStep === 1 &&
 					<Fragment>
 						<Box sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}>
-							<RequestBioData cb={handleMockMDS} MDS_BYPASS={MDS_BYPASS} />
+							<RequestBioData cb={handleMockMDS} MDS_BYPASS={mockVerification} goBackHandler={handlePrevious} />
 						</Box>
 					</Fragment>
 				}

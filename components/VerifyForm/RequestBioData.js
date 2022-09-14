@@ -1,13 +1,13 @@
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box, Button, IconButton } from '@mui/material';
 import Image from 'next/image';
 import styles from "./VerifyForm.module.scss";
 import { useState } from "react";
 import NotificationManager from '../../lib/NotificationManager.js';
-import { defaultConfig } from '../../config/default';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import { CircularProgress } from "@mui/material"
 
-export default function RequestBioData({ cb, MDS_BYPASS = false }) {
+export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler = () => {} }) {
 	const [failed, setFailed] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -17,7 +17,7 @@ export default function RequestBioData({ cb, MDS_BYPASS = false }) {
 
 	const handleTryAgain = async () => {
 		setIsLoading(true);
-		if (defaultConfig.MOCK) {
+		if (MDS_BYPASS) {
 			setTimeout(() => {
 				const biometrics = {
 					"specVersion": "0.9.5",
@@ -49,10 +49,12 @@ export default function RequestBioData({ cb, MDS_BYPASS = false }) {
 				3
 			} else {
 				setIsLoading(false);
+				setFailed(true)
 				NotificationManager.notify({ message: "Biometric Device is not ready. Try again.", type: "warning" })
 			}
 		} else {
 			setIsLoading(false);
+			setFailed(true)
 			NotificationManager.notify({ message: "Biometric Device not found. Connect device or check connection and try again", type: "warning" })
 		}
 
@@ -188,7 +190,10 @@ export default function RequestBioData({ cb, MDS_BYPASS = false }) {
 			</Box>
 			<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 3 }}>
 				{!isLoading &&
-					<Button onClick={handleTryAgain} disabled={isLoading}>{failed ? "Try Again" : "Start"}</Button>
+					<Box>
+						{failed && <Button size="large" sx={{ mr: "1em" }} color="secondary" onClick={goBackHandler} variant="outlined" aria-label='Go Back' title='Go Back'><ArrowBackIcon /></Button>}
+						<Button variant="contained" onClick={handleTryAgain} disabled={isLoading}>{failed ? "Try Again" : "Start"}</Button>
+					</Box>
 				}
 			</Box>
 		</Box>
