@@ -8,6 +8,8 @@ The backend of the application provides av endpoint to be consumed by DHIS2 syst
 First, run the development server:
 
 ```bash
+npm install
+
 npm run dev
 
 # or 

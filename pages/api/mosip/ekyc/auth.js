@@ -1,11 +1,16 @@
 import axios from "axios";
-import { decipheringText } from "../../../utils/aes.encrypt";
-import { MOSIP_BASE_ROUTE } from "../../../utils/mosip.env";
-import { validateAuth } from "../../../utils/validations";
+import { decipheringText } from "../../../../utils/aes.encrypt";
+import { MOSIP_BASE_ROUTE } from "../../../../utils/mosip.env";
+import { validateAuth } from "../../../../utils/validations";
 
 export default async function authenticate(req, res) {
 	try {
 		if (req.method === 'POST') {
+
+			return res.status(200).json({
+				message: 'EKYC is ready to go',
+				status: true
+			});
 			let validationRes = validateAuth(req.query);
 
 			if (!validationRes.success) {
@@ -44,67 +49,7 @@ export default async function authenticate(req, res) {
 				}
 
 			} else {
-				let mosip_request_body = {
-					"id": "auth-id",
-					"version": "auth-version",
-					"individualId": req.body.individualId,
-					"individualIdType": req.body.individualIdType,
-					"transactionID": req.body.transactionId,
-					"requestTime": "auth-requ-time",
-					"specVersion": req.body.specVersion,
-					"thumbprint": req.body.thumbprint,
-					"domainUri": req.body.domainUri,
-					"env": req.body.env,
-					"request": {
-						"otp": "otp-123424",
-						"staticPin": "static-pin-7890",
-						"timestamp": "time-stanp-now",
-						"biometrics": [
-							{
-								"data": {
-									"digitalId": {
-										"serialNo": req.body.serialNo,
-										"make": req.body.make,
-										"model": req.body.model,
-										"type": req.body.type,
-										"deviceSubType": req.body.deviceSubType,
-										"deviceProvider": req.body.deviceProvider,
-										"deviceProviderId": req.body.deviceProviderId,
-										"dp": "db",
-										"dpId": "dpId",
-										"dateTime": req.body.dateTime
-									},
-									"bioType": "data-bio-type",
-									"bioSubType": "data-bio-type-id",
-									"bioValue": "data-bio-value",
-									"deviceCode": "data-devoce-code",
-									"deviceServiceVersion": "data-device-serv-ver",
-									"transactionId": req.body.transactionId,
-									"timestamp": req.body.timestamp,
-									"purpose": req.body.purpose,
-									"env": req.body.env,
-									"version": req.body.version,
-									"domainUri": req.body.domainUri,
-									"requestedScore": req.body.requestedScore,
-									"qualityScore": req.body.qualityScore
-								},
-								"hash": req.body.hash,
-								"sessionKey": "session key",
-								"specVersion": req.body.specVersion,
-								"thumbprint": req.body.thumbprint
-							}
-						]
-					},
-					"consentObtained": true,
-					"requestHMAC": req.body.requestHMAC,
-					"requestSessionKey": "auth-session-key",
-					"metadata": {
-						"andrewId": req.body.andrewId
-					},
-					"allowedKycAttributes": [
-						"auth-allowed-ky"
-					]
-				};
+				let mosip_request_body = {body: "required"};
 				// partnerId: jnishimi
 				// mispPartner: cmumisp
 				// apiKey: 940594
