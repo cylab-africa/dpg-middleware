@@ -44,6 +44,7 @@ export default async function authenticate(req, res) {
 				}
 
 			} else {
+				console.log("Working");
 				let mosip_request_body = {
 					"id": "auth-id",
 					"version": "auth-version",
@@ -113,7 +114,10 @@ export default async function authenticate(req, res) {
 				mosip_resp = await axios.post(mosip_route, mosip_request_body);
 			}
 
-			await axios.post(callback_url, mosip_resp);
+			console.log(mosip_resp)
+			const call_res = await axios.post(callback_url, mosip_resp);
+
+			console.log("From callback server ",call_res.data)
 
 			return res.status(200).json({
 				message: 'This is hit when we want to authenticate someone',
