@@ -45,12 +45,8 @@ export default async function authenticate(req, res) {
 			let mosip_resp = null;
 			const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 			const ekyc_partner_id = auth_partner_id;
-			console.log(MOSIP_BYPASS)
-			if(MOSIP_BYPASS == true)
-			{
-				console.log(MOSIP_BYPASS)
-			}
-			if(MOSIP_BYPASS == true) {
+
+			if(MOSIP_BYPASS == "true") {
 				mosip_resp = [
 					{
 					  "cause": {
@@ -292,14 +288,13 @@ export default async function authenticate(req, res) {
 				// mispPartner: cmumisp
 				// apiKey: 940594
 				// mispLicenseKey: vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4
-				console.log("No mock")
 				mosip_route = `${MOSIP_BASE_ROUTE}kyc/${misp_lk}/${ekyc_partner_id}/${api_key}`;
 				mosip_resp = await axios.post(mosip_route, mosip_request_body);
-
+				mosip_resp = mosip_resp.data;
 			}
 			
-			const call_res = await axios.post(callback_url, {...mosip_resp.data});   // send to callback server  FIX ME based on mosip_bypass
-			console.log("from callback server", call_res.data);
+			const call_res = await axios.post(callback_url, mosip_resp);
+			// console.log("from callback server", call_res);
 
 			// When It is not mosip_bypass, MOSIP gives the response, and I need to control a response better.
 
