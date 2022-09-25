@@ -42,3 +42,12 @@ export const validateEncryptKeys = (keys) =>
     }
     return {success, message}
 }; 
+
+
+export const ekycValidateAuth = (body) =>
+{
+    let success = true;
+    let message = "Validation is ok";
+    
+    return {success, message}
+}; 

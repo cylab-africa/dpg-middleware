@@ -1,6 +1,6 @@
 import axios from "axios";
 import { decipheringText } from "../../../utils/aes.encrypt";
-import { MOSIP_BASE_ROUTE } from "../../../utils/mosip.env";
+import { MOSIP_BASE_ROUTE, MOSIP_BYPASS } from "../../../utils/mosip.env";
 import { validateAuth } from "../../../utils/validations";
 
 export default async function authenticate(req, res) {
@@ -30,7 +30,7 @@ export default async function authenticate(req, res) {
 			let mosip_resp = null;
 			const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
 			
-			if (process.env.MOSIP_BYPASS) {
+			if (MOSIP_BYPASS == "true") {
 				mosip_resp = {
 					"id": "mosip.identity.auth",
 					"version": "v1",
@@ -111,9 +111,12 @@ export default async function authenticate(req, res) {
 				// mispLicenseKey: vT4Iu6TYB7la8I3qt2pV63D1CKZz01716gc913Vhpl0hLwD9G4
 				mosip_route = `${MOSIP_BASE_ROUTE}auth/${misp_lk}/${auth_partner_id}/${api_key}`;
 				mosip_resp = await axios.post(mosip_route, mosip_request_body);
+				mosip_resp = mosip_resp.data;
 			}
 
-			await axios.post(callback_url, mosip_resp);
+			const call_res = await axios.post(callback_url, mosip_resp);
+
+			// console.log("From callback server ",call_res.data)
 
 			return res.status(200).json({
 				message: 'This is hit when we want to authenticate someone',
