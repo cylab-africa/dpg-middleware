@@ -1,9 +1,9 @@
 import axios from "axios";
 import { decipheringText } from "../../../../utils/aes.encrypt";
-import { MOSIP_BASE_ROUTE, MOSIP_BYPASS } from "../../../../utils/mosip.env";
+import { KYC_MOSIP_MOCK_RESPONSE_BODY, MOSIP_BASE_ROUTE, MOSIP_BYPASS } from "../../../../utils/mosip.env";
 import { ekycValidateAuth, validateAuth } from "../../../../utils/validations";
 
-export default async function authenticate(req, res) {
+export default async function kyc_real_authenticate(req, res) {
 	try {
 		/* requirements:
 		  1. misp_lk
@@ -47,90 +47,7 @@ export default async function authenticate(req, res) {
 			const ekyc_partner_id = auth_partner_id;
 
 			if(MOSIP_BYPASS == "true") {
-				mosip_resp = [
-					{
-					  "cause": {
-						"stackTrace": [
-						  {
-							"classLoaderName": "string",
-							"moduleName": "string",
-							"moduleVersion": "string",
-							"methodName": "string",
-							"fileName": "string",
-							"lineNumber": 0,
-							"className": "string",
-							"nativeMethod": true
-						  }
-						],
-						"message": "string",
-						"suppressed": [
-						  {
-							"stackTrace": [
-							  {
-								"classLoaderName": "string",
-								"moduleName": "string",
-								"moduleVersion": "string",
-								"methodName": "string",
-								"fileName": "string",
-								"lineNumber": 0,
-								"className": "string",
-								"nativeMethod": true
-							  }
-							],
-							"message": "string",
-							"localizedMessage": "string"
-						  }
-						],
-						"localizedMessage": "string"
-					  },
-					  "stackTrace": [
-						{
-						  "classLoaderName": "string",
-						  "moduleName": "string",
-						  "moduleVersion": "string",
-						  "methodName": "string",
-						  "fileName": "string",
-						  "lineNumber": 0,
-						  "className": "string",
-						  "nativeMethod": true
-						}
-					  ],
-					  "metadata": {
-						"additionalProp1": {},
-						"additionalProp2": {},
-						"additionalProp3": {}
-					  },
-					  "actionMessage": "string",
-					  "message": "string",
-					  "codes": [
-						"string"
-					  ],
-					  "errorText": "string",
-					  "errorTexts": [
-						"string"
-					  ],
-					  "errorCode": "string",
-					  "suppressed": [
-						{
-						  "stackTrace": [
-							{
-							  "classLoaderName": "string",
-							  "moduleName": "string",
-							  "moduleVersion": "string",
-							  "methodName": "string",
-							  "fileName": "string",
-							  "lineNumber": 0,
-							  "className": "string",
-							  "nativeMethod": true
-							}
-						  ],
-						  "message": "string",
-						  "localizedMessage": "string"
-						}
-					  ],
-					  "localizedMessage": "jean paul"
-					}
-				  ]  // ekyc_mosip_response
+				mosip_resp = KYC_MOSIP_MOCK_RESPONSE_BODY  // ekyc_mosip_response
 
 			} else {	
 				/*
