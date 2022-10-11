@@ -104,7 +104,7 @@ export default async function real_authenticate(req, res) {
 				mosip_resp = mosip_resp.data;
 			}
 
-			const call_res = await axios.post(callback_url, mosip_resp);
+			// const call_res = await axios.post(callback_url, mosip_resp);
 
 			// console.log("From callback server ",call_res.data)
 
