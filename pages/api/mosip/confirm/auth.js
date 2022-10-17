@@ -1,7 +1,7 @@
-import axios from "axios";
 import { decipheringText } from "../../../../utils/aes.encrypt";
 import { MOSIP_BASE_ROUTE, MOSIP_BYPASS, MOSIP_MOCK_RESPONSE_BODY } from "../../../../utils/mosip.env";
 import { validateAuth } from "../../../../utils/validations";
+import { sendCallBack } from "../../../utils/sendCallBack";
 
 export default async function real_authenticate(req, res) {
 	try {
@@ -104,10 +104,15 @@ export default async function real_authenticate(req, res) {
 				mosip_resp = mosip_resp.data;
 			}
 
-			// const call_res = await axios.post(callback_url, mosip_resp);
-
-			// console.log("From callback server ",call_res.data)
-
+			const call_res = await sendCallBack(callback_url, mosip_resp);
+			if(!call_res.success)
+			{
+				return res.status(400).json({
+					success: false,
+					message: "could not send the callback"
+				})
+			}
+			
 			return res.status(200).json({
 				message: 'This is hit when we want to authenticate someone',
 				params: "We want from the body: 1. MISP-LK, 2. Auth-Partner-ID, and 3. API-Key",

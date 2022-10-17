@@ -1,7 +1,7 @@
-import axios from "axios";
 import { decipheringText } from "../../../../utils/aes.encrypt";
 import { KYC_MOSIP_MOCK_RESPONSE_BODY, MOSIP_BASE_ROUTE, MOSIP_BYPASS } from "../../../../utils/mosip.env";
 import { ekycValidateAuth, validateAuth } from "../../../../utils/validations";
+import { sendCallBack } from "../../../utils/sendCallBack";
 
 export default async function kyc_real_authenticate(req, res) {
 	try {
@@ -210,7 +210,14 @@ export default async function kyc_real_authenticate(req, res) {
 				mosip_resp = mosip_resp.data;
 			}
 			
-			const call_res = await axios.post(callback_url, mosip_resp);
+			const call_res = sendCallBack(callback_url, mosip_resp);
+			if(!call_res.success)
+			{
+				return res.status(400).json({
+					success: false,
+					message: "could not send the callback"
+				})
+			}
 			// console.log("from callback server", call_res);
 
 			// When It is not mosip_bypass, MOSIP gives the response, and I need to control a response better.
