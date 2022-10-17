@@ -1,5 +1,4 @@
-import axios from "axios";  // This might be the probloem I am facing
-
+const axios = require("axios");
 export const sendCallBack =  async (url:string, resp:any)  =>
 {
     try
