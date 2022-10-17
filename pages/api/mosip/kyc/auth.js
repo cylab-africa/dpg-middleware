@@ -210,7 +210,7 @@ export default async function kyc_real_authenticate(req, res) {
 				mosip_resp = mosip_resp.data;
 			}
 			
-			const call_res = await sendCallBack(callback_url, mosip_resp);
+			const call_res = sendCallBack(callback_url, mosip_resp);
 			if(!call_res.success)
 			{
 				return res.status(400).json({

@@ -112,9 +112,7 @@ export default async function real_authenticate(req, res) {
 					message: "could not send the callback"
 				})
 			}
-
-			// console.log("From callback server ",call_res.data)
-
+			
 			return res.status(200).json({
 				message: 'This is hit when we want to authenticate someone',
 				params: "We want from the body: 1. MISP-LK, 2. Auth-Partner-ID, and 3. API-Key",
