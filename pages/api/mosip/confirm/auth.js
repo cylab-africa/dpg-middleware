@@ -107,6 +107,7 @@ export default async function real_authenticate(req, res) {
 			const call_res = await sendCallBack(callback_url, mosip_resp);
 			if(!call_res.success)
 			{
+				console.log("could not send the callback")
 				return res.status(400).json({
 					success: false,
 					message: "could not send the callback"
