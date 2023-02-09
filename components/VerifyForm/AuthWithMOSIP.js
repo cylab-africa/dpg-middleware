@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import NotificationManager from '../../lib/NotificationManager.js';
 import { defaultConfig } from '../../config/default';
 import { CircularProgress } from "@mui/material"
-import { CheckCircle as CheckCircleIcon, Circle as CancelIcon } from '@mui/icons-material';
+import { CheckCircle as CheckCircleIcon, Cancel as CancelIcon } from '@mui/icons-material';
 
 export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) {
 	const [status, setStatus] = useState(false);
