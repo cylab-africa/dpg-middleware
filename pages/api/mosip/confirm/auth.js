@@ -29,6 +29,7 @@ export default async function real_authenticate(req, res) {
 			let mosip_route = null;
 			let mosip_resp = null;
 			const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
+			console.log(keys_info)
 			
 			if (MOSIP_BYPASS == "true") {
 				mosip_resp = MOSIP_MOCK_RESPONSE_BODY;
@@ -125,6 +126,7 @@ export default async function real_authenticate(req, res) {
 		}
 	}
 	catch (err) {
+		console.log(err)
 		return res.status(400).json(err);
 	}
 

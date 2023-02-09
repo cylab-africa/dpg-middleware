@@ -15,7 +15,6 @@ export default async function kyc_real_authenticate(req, res) {
 		  ekyc_mosip_request_body
 		*/
 		if (req.method === 'POST') {
-
 			// return res.status(200).json({
 			// 	message: 'EKYC is ready to go',
 			// 	status: true

@@ -16,7 +16,6 @@ export default async function authenticate(req, res) {
 					message: validationRes.message
 				});
 			}
-
 			const token = req.query.token;
 			
 			const keys_decrypt = decipheringText(token);
@@ -43,7 +42,7 @@ export default async function authenticate(req, res) {
 		}
 	}
 	catch (err) {
-		return res.status(400).json(err);
+		return res.status(400).json({success: false, message: err.message});
 	}
 
 }
