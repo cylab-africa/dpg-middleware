@@ -122,12 +122,10 @@ export default async function real_authenticate(req, res) {
 				mosip_response: mosip_resp,
 				status: true
 			})
-
 		}
 	}
 	catch (err) {
 		console.log(err)
 		return res.status(400).json(err);
 	}
-
 }
