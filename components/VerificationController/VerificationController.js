@@ -1,5 +1,5 @@
 import { Typography, Box, Stepper, Step, StepLabel, Button } from '@mui/material';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment } from 'react';
 import RequestBioData from '../VerifyForm/RequestBioData';
 import AuthWithMOSIP from '../VerifyForm/AuthWithMOSIP';
 

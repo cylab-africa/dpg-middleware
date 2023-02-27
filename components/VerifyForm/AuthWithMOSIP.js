@@ -1,5 +1,4 @@
-import { Typography, Box, Button } from '@mui/material';
-import Image from 'next/image';
+import { Box, Typography } from '@mui/material';
 import styles from "./VerifyForm.module.scss";
 import { useEffect, useState } from "react";
 import NotificationManager from '../../lib/NotificationManager.js';
@@ -17,6 +16,7 @@ export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) 
 	useEffect(() => {
 		const device_options = bioData.options;
 		const options = {
+			"mock": "true",
 			"env": "Staging",
 			"purpose": "Auth",
 			"specVersion": "0.9.5",
@@ -33,6 +33,7 @@ export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) 
 			...device,
 			...device_options,
 		}
+		try{
 		fetch(`/api/mosip/auth?token=${token}`,
 			{
 				method: "POST",
@@ -56,6 +57,10 @@ export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) 
 				NotificationManager.notify({ message, type: "error" });
 				return false;
 			});
+		}catch(err){
+			console.log(err);
+			NotificationManager.notify({message: "Unknown error occurred. Contact Admin.", type: "error" })
+		}
 
 	})
 
@@ -70,11 +75,13 @@ export default function AuthWithMOSIP({ token, user, bioData, cb = () => { } }) 
 				{!isLoading && status &&
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<CheckCircleIcon sx={{ color: "#007c04", m: 3, width: 200, height: 200 }} />
+						<Typography variant='subtitle1'>Verification Successful</Typography>
 					</Box>
 				}
 				{!isLoading && !status &&
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<CancelIcon sx={{ color: "#7C0000", m: 3, width: 200, height: 200 }} />
+						<Typography variant='subtitle1'>Verification failed</Typography>
 					</Box>
 				}
 			</Box>

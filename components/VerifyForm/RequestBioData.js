@@ -1,4 +1,4 @@
-import { Typography, Box, Button, IconButton } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import Image from 'next/image';
 import styles from "./VerifyForm.module.scss";
 import { useState } from "react";
@@ -26,7 +26,7 @@ export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler =
 					"error": {
 						"errorCode": "0",
 						"errorInfo": "Success"
-					}
+					},
 				}
 				return cb({ biometrics });
 			}, 3600);
