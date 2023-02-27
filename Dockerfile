@@ -7,17 +7,17 @@ RUN apk add --no-cache libc6-compat
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and yarn.lock files to the container
-COPY package.json yarn.lock ./
+# Copy the package.json files to the container
+COPY package*.json ./
 
 # Install dependencies
-RUN yarn install --frozen-lockfile --production
+RUN npm install --frozen-lockfile --production
 
 # Copy the rest of the app's source code to the container
 COPY . .
 
 # Build the app
-RUN yarn build
+RUN npm build
 
 # Set environment variables
 ENV NODE_ENV production
@@ -27,4 +27,4 @@ ENV PORT 3000
 EXPOSE 3000
 
 # Start the app
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
