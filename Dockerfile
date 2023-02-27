@@ -17,7 +17,7 @@ RUN npm install --frozen-lockfile --production
 COPY . .
 
 # Build the app
-RUN npm build
+RUN npm run build
 
 # Set environment variables
 ENV NODE_ENV production
