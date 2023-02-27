@@ -15,7 +15,6 @@ export default async function kyc_real_authenticate(req, res) {
 		  ekyc_mosip_request_body
 		*/
 		if (req.method === 'POST') {
-
 			// return res.status(200).json({
 			// 	message: 'EKYC is ready to go',
 			// 	status: true
@@ -210,7 +209,8 @@ export default async function kyc_real_authenticate(req, res) {
 				mosip_resp = mosip_resp.data;
 			}
 			
-			const call_res = sendCallBack(callback_url, mosip_resp);
+			const call_res = await sendCallBack(callback_url, {abc: "abc"});
+			console.log(call_res, "Je suis excitee")
 			if(!call_res.success)
 			{
 				return res.status(400).json({
@@ -222,16 +222,19 @@ export default async function kyc_real_authenticate(req, res) {
 
 			// When It is not mosip_bypass, MOSIP gives the response, and I need to control a response better.
 
+			console.log(mosip_resp)
 			return res.status(200).json({
 				message: 'This is hit when we want to authenticate someone',
 				params: "We want from the body: 1. MISP-LK, 2. Auth-Partner-ID, and 3. API-Key",
 				callback_url: callback_url,
 				mosip_response: mosip_resp,
-				status: true
+				status: true,
+				success: true
 			})
 		}
 	}
 	catch (err) {
-		return res.status(400).json(err);
+		console.log(err);
+		return res.status(400).json({status: false, success: true, message: err.message});
 	}
 }
