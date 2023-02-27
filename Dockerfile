@@ -1,36 +1,30 @@
-# Install dependencies and build the app
-FROM node:16-alpine AS builder
+# Use the official Node.js 16 image as the base image
+FROM node:16-alpine
 
-RUN apk add --no-cache libc6-compat yarn
+# Install system dependencies
+RUN apk add --no-cache libc6-compat
 
+# Set the working directory in the container
 WORKDIR /app
 
+# Copy the package.json and yarn.lock files to the container
 COPY package.json yarn.lock ./
 
-RUN yarn install --frozen-lockfile
+# Install dependencies
+RUN yarn install --frozen-lockfile --production
 
+# Copy the rest of the app's source code to the container
 COPY . .
 
+# Build the app
 RUN yarn build
 
-# Production image, copy all the files and run next
-FROM node:16-alpine AS runner
-WORKDIR /app
-
+# Set environment variables
 ENV NODE_ENV production
-
-RUN addgroup --system --gid 1001 interopgroup && \
-	adduser --system --uid 1001 interop -G interopgroup
-
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-
-COPY --from=builder --chown=interop:interopgroup /app/.next ./.next
-
-USER interop
-
-EXPOSE 3000
-
 ENV PORT 3000
 
-CMD ["node", "server.js"]
+# Expose the port that the app will run on
+EXPOSE 3000
+
+# Start the app
+CMD ["yarn", "start"]
