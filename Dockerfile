@@ -1,7 +1,7 @@
 # Install dependencies and build the app
 FROM node:16-alpine AS builder
 
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat yarn
 
 WORKDIR /app
 
