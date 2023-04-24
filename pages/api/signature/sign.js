@@ -14,7 +14,7 @@ export default async function sign(req, res) {
 			}
 			return res.status(200).json({
 				success: true,
-				data: await CryptoUtil.signData(CryptoUtil.covertToBase64(data)),
+				data: await CryptoUtil.signData(CryptoUtil.convertToBase64(data)),
 				message: "Data signed successfully"
 			});
 		} catch (exp) {
