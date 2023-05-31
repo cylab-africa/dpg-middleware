@@ -2,10 +2,9 @@ import { CryptoUtil } from "../../../lib/CryptoUtil";
 
 
 export default async function sign(req, res) {
-	if (req.method === 'PUT') {
+	if (req.method === 'POST') {
 		try {
 			let data = JSON.stringify(req.body)
-			console.log({ data })
 			if (!data) {
 				return res.status(400).json({
 					success: false,
@@ -14,7 +13,7 @@ export default async function sign(req, res) {
 			}
 			return res.status(200).json({
 				success: true,
-				data: await CryptoUtil.signData(CryptoUtil.convertToBase64(data)),
+				data: await CryptoUtil.getSignature(data),
 				message: "Data signed successfully"
 			});
 		} catch (exp) {

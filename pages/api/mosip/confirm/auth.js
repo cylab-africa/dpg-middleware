@@ -39,7 +39,7 @@ export default async function real_authenticate(req, res) {
 					"id": "auth-id",
 					"version": "auth-version",
 					"individualId": req.body.individualId,
-					"individualIdType": req.body.individualIdType,
+					//"individualIdType": req.body.individualIdType,
 					"transactionID": req.body.transactionId,
 					"requestTime": "auth-requ-time",
 					"specVersion": req.body.specVersion,
@@ -90,11 +90,11 @@ export default async function real_authenticate(req, res) {
 					"requestHMAC": req.body.requestHMAC,
 					"requestSessionKey": "auth-session-key",
 					"metadata": {
-						"andrewId": req.body.andrewId
+						//"andrewId": req.body.andrewId
 					},
-					"allowedKycAttributes": [
+					/* "allowedKycAttributes": [
 						"auth-allowed-ky"
-					]
+					] */
 				};
 				// partnerId: jnishimi
 				// mispPartner: cmumisp
