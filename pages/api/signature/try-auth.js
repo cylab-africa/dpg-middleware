@@ -7,7 +7,6 @@ export default async function sign(req, res) {
 	
 	
 	const authRequest = new AuthRequest();
-
 	const dataBytes = CryptoUtil.convertToBase64(data);
 	// get default mosip request payload
 
@@ -34,7 +33,12 @@ export default async function sign(req, res) {
 	const requestHMAC = ""
 
 	// generate the requestSessionKey
-	const requestSessionKey = ""
+	let requestSessionKey = CryptoUtil.asymmetricEncrypt();
+	console.log({ requestSessionKey })
+	requestSessionKey = CryptoUtil.convertToBase64(requestSessionKey);
+	requestSessionKey = CryptoUtil.convertToBase64UrlPadded(requestSessionKey);
+	console.log({ requestSessionKey })
+	authRequest.setRequestSessionKey(requestSessionKey);
 
 	// generate signature from entire auth request
 	const signature = ""
