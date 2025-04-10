@@ -1,11 +1,13 @@
-import axios from "axios";
+const axios = require("axios");
+import { getDataFromResponse } from "../../utils/helper";
 
 export const sendCallBack =  async (url:string, resp:any)  =>
 {
     try
     {
-        const call_res = await axios.post(url, resp);
-        return {success:true, data: call_res}
+        let call_res = await axios.post(url, resp);
+        call_res = getDataFromResponse(call_res);
+        return call_res;
     }
     catch(err)
     {

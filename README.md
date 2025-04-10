@@ -3,6 +3,11 @@ This project is the application that plays as the middleware between DHIS2  and 
 
 The backend of the application provides av endpoint to be consumed by DHIS2 system while generating URL to open the middleware. You will see the endpoint in API Documentation
 
+## Pre-requisites
+1. You must have npm installed on your server. Documentation can be found [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/).
+2. Have a running instance of MOSIP. You can find the Cylab documentation [here for on-premise](https://github.com/cylab-africa/mosip-onprem-deployment-guides) and [here for AWS](https://github.com/cylab-africa/mosip-aws-deployment).
+3. Have a running instance of DHIS2. You can find the Cylab documentation [here](https://github.com/cylab-africa/dhis2-mosip-middleware/blob/main/DHIS2-deployment-guide.md).
+
 ## Getting Started
 
 First, run the development server:

@@ -4,7 +4,7 @@ metadata:
   labels:
     app: dhis-mosip-middleware 
   name: dhis-mosip-middleware-service-prod 
-  namespace: dhis-mosip
+  namespace: interop
 spec:
   type: ClusterIP
   ports:
@@ -20,7 +20,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dhis-mosip-middleware-account 
-  namespace: dhis-mosip
+  namespace: interop
   labels:
     app: dhis-mosip-middleware 
 ---
@@ -30,7 +30,7 @@ metadata:
   labels:
     app: dhis-mosip-middleware 
   name: dhis-mosip-middleware-deployment-prod 
-  namespace: dhis-mosip
+  namespace: interop
 spec:
   replicas: 1  
   selector:
@@ -45,7 +45,7 @@ spec:
     spec:
       serviceAccountName: dhis-mosip-middleware-account  
       containers:  
-      - image: 160168652050.dkr.ecr.us-west-1.amazonaws.com/dhis2-mosip-middleware:latest
+      - image: cylabinterop/dhis2-mosip-middleware:latest
         name: dhis-mosip-middleware-container  
         ports:
         - containerPort: 3000 
@@ -65,7 +65,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dhis-mosip-middleware-ingress
-  namespace: dhis-mosip
+  namespace: interop
   labels:
     app: dhis-mosip-middleware 
 spec:
@@ -90,7 +90,7 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: dhis-mosip-middleware-secret-prod
-  namespace: dhis-mosip
+  namespace: interop
   labels:
     app: dhis-mosip-middleware 
 stringData:

@@ -29,6 +29,7 @@ export default async function real_authenticate(req, res) {
 			let mosip_route = null;
 			let mosip_resp = null;
 			const { misp_lk, auth_partner_id, api_key, transaction_id, callback_url } = keys_info;
+			console.log(keys_info)
 			
 			if (MOSIP_BYPASS == "true") {
 				mosip_resp = MOSIP_MOCK_RESPONSE_BODY;
@@ -38,7 +39,7 @@ export default async function real_authenticate(req, res) {
 					"id": "auth-id",
 					"version": "auth-version",
 					"individualId": req.body.individualId,
-					"individualIdType": req.body.individualIdType,
+					//"individualIdType": req.body.individualIdType,
 					"transactionID": req.body.transactionId,
 					"requestTime": "auth-requ-time",
 					"specVersion": req.body.specVersion,
@@ -89,11 +90,11 @@ export default async function real_authenticate(req, res) {
 					"requestHMAC": req.body.requestHMAC,
 					"requestSessionKey": "auth-session-key",
 					"metadata": {
-						"andrewId": req.body.andrewId
+						//"andrewId": req.body.andrewId
 					},
-					"allowedKycAttributes": [
+					/* "allowedKycAttributes": [
 						"auth-allowed-ky"
-					]
+					] */
 				};
 				// partnerId: jnishimi
 				// mispPartner: cmumisp
@@ -107,6 +108,7 @@ export default async function real_authenticate(req, res) {
 			const call_res = await sendCallBack(callback_url, mosip_resp);
 			if(!call_res.success)
 			{
+				console.log("could not send the callback")
 				return res.status(400).json({
 					success: false,
 					message: "could not send the callback"
@@ -120,11 +122,10 @@ export default async function real_authenticate(req, res) {
 				mosip_response: mosip_resp,
 				status: true
 			})
-
 		}
 	}
 	catch (err) {
+		console.log(err)
 		return res.status(400).json(err);
 	}
-
 }

@@ -1,4 +1,4 @@
-import { Typography, Box, Button, IconButton } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import Image from 'next/image';
 import styles from "./VerifyForm.module.scss";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import { CircularProgress } from "@mui/material"
 
-export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler = () => {} }) {
+export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler = () => { } }) {
 	const [failed, setFailed] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +26,7 @@ export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler =
 					"error": {
 						"errorCode": "0",
 						"errorInfo": "Success"
-					}
+					},
 				}
 				return cb({ biometrics });
 			}, 3600);
@@ -36,39 +36,39 @@ export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler =
 	}
 	const capture_flow = async () => {
 		const disc = await discovery();
-		console.log(disc);
 		if (disc) {
 			if (disc.deviceStatus === "Ready") {
 				const info = await deviceInfo()
-				if (info[0].error.errorCode === "0") {
-					await stream_and_capture();
+				if (info[0]?.error?.errorCode === "0") {
+					const response = await capture();
+					cb(response);
+					setIsLoading(false);
 				}
 				setTimeout(async () => {
 					console.log("log timeout ");
 				}, 15000)
-				3
 			} else {
 				setIsLoading(false);
 				setFailed(true)
-				NotificationManager.notify({ message: "Biometric Device is not ready. Try again.", type: "warning" })
+				NotificationManager.notify({ message: "Biometric Device is not ready. Check the cable connection and make sure the right drivers then try again.", type: "warning" })
 			}
 		} else {
 			setIsLoading(false);
 			setFailed(true)
 			NotificationManager.notify({ message: "Biometric Device not found. Connect device or check connection and try again", type: "warning" })
 		}
-
 	}
 	const stream_and_capture = async () => {
 		const response = await fetch(`http://127.0.0.1:${port}/stream`, {
 			method: "STREAM",
+			mode: "cors",
 			headers: {
 				"accept": "multipart/*",
 			},
 			body: JSON.stringify({
-				"deviceId": "C8R1ET11432",
-				"deviceSubId": 1,
-				"timeout": "10000"
+				"deviceId": "2143001190",
+				"deviceSubId": 0,
+				"timeout": "5000"
 			})
 		});
 		const reader = response.body.getReader();
@@ -86,50 +86,38 @@ export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler =
 	}
 
 	const deviceInfo = async () => {
-		try {
-			const response = await fetch(`http://127.0.0.1:${port}/info`, {
-				method: 'MOSIPDINFO',
-				headers: {
-					"Content-Type": "application/json",
-					"accept": "application/json",
-				},
-				body: {},
-				redirect: 'manual'
-			});
-			const json = await response.json();
-			console.log({ deviceInfo: json });
-			return json;
-		} catch (err) {
-			return err;
-		}
+		const response = await fetch(`http://127.0.0.1:${port}/info`, {
+			method: 'MOSIPDINFO',
+			mode: "cors",
+			headers: {
+				"accept": "application/json",
+			},
+			redirect: 'manual'
+		});
+		const json = await response.json();
+		return json;
 	}
 	const capture = async () => {
 		try {
 			const response = await fetch(`http://127.0.0.1:${port}/capture`, {
 				method: "RCAPTURE",
+				mode: "cors",
 				body: JSON.stringify({
 					"env": "Developer",
-					"purpose": "Registration",
+					"purpose": "Auth",
 					"specVersion": "0.9.5",
 					"timeout": "20000",
-					"deviceCode": 'C8R1ET11432',
-					"captureTime": new Date().toISOString(),
-					"transactionId": "1125555",
+					"captureTime": "2022-08-02T10:16:48Z",
+					"domainUri": "https://mosipcmuafrica.me",
+					"transactionId": "1234567890",
 					"bio": [
 						{
 							"type": "Finger",
-							"count": "4",
-							// bioSubType is optional values must according to deviceSubId and count 
-							"bioSubType": [
-								"Left IndexFinger",
-								"Left MiddleFinger",
-								"Left RingFinger",
-								"Left LittleFinger"
-							],
-							"exception": [],
-							"requestedScore": "50",
-							"deviceId": "C8R1ET11432",
-							"deviceSubId": 1, // 1 for Left Slap, 2 for Right slap, 3 for thumbs 
+							"count": "1",
+							"bioSubType": ["UNKNOWN"],
+							"requestedScore": "10",
+							"deviceId": "2143001190",
+							"deviceSubId": 0,
 							"previousHash": ""
 						}
 					]
@@ -159,8 +147,10 @@ export default function RequestBioData({ cb, MDS_BYPASS = false, goBackHandler =
 						})
 					});
 					const json = await response.json();
-					if (json.length > 0)
-						return json[0];
+					if (json.length === 0 || json[0].error.errorCode === "106") {
+						continue;
+					}
+					return json[0];
 				} catch (err) {
 					continue;
 				}

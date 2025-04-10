@@ -1,6 +1,5 @@
-import axios from "axios";
 import { decipheringText } from "../../../utils/aes.encrypt";
-import { API_ROUTE } from "../../../utils/mosip.env";
+// import { API_ROUTE } from "../../../utils/mosip.env";
 import { validateAuth } from "../../../utils/validations";
 import real_authenticate from "./confirm/auth";
 import kyc_real_authenticate from "./kyc/auth";
@@ -17,7 +16,6 @@ export default async function authenticate(req, res) {
 					message: validationRes.message
 				});
 			}
-
 			const token = req.query.token;
 			
 			const keys_decrypt = decipheringText(token);
@@ -40,11 +38,9 @@ export default async function authenticate(req, res) {
 				
 				return await real_authenticate(req, res);
 			}
-
 		}
 	}
 	catch (err) {
-		return res.status(400).json(err);
+		return res.status(400).json({success: false, message: err.message});
 	}
-
 }

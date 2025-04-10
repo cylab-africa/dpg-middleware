@@ -1,0 +1,6 @@
+{
+	"thunder-client.customMethods": "MOSIPDINFO,MOSIPDISC",
+	"files.watcherExclude": {
+		"**/target": true
+	}
+}
